@@ -21,7 +21,6 @@ const config = {
         fullySpecified: false,
       }
     });
-    config.output.assetModuleFilename = "static/images/[hash][ext][query]";
     return config
   },
 };

@@ -9,7 +9,7 @@ export const config = { unstable_runtimeJS: false };
 export default function IndexPage({ frontMatter }) {
   return (
     <>
-      <Meta title={frontMatter.title} description={frontMatter.description} />
+      <Meta title="llllvvuu" />
       <Layout>
         {frontMatter.map(item => (
           <>

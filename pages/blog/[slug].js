@@ -17,10 +17,10 @@ const components = {
   h2: ({ children }) => <h2 className="text-xl font-serif mt-2">{children}</h2>,
   ul: ({ children }) => <ul className="list-disc list-inside my-1">{children}</ul>,
   'p.inlineCode': ({ children }) => <code
-    className="bg-yellow-100 text-yellow-900 text-sm p-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-100"
+    className="bg-yellow-100 text-yellow-900 text-xs p-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-100"
     >{children}</code>,
   pre: ({ children }) => <pre
-    className="text-sm bg-yellow-100 text-yellow-900 p-2 my-2 rounded shadow dark:bg-blue-900 dark:text-blue-100"
+    className="text-xs overflow-auto bg-yellow-100 text-yellow-900 p-2 my-2 rounded shadow dark:bg-blue-900 dark:text-blue-100"
    >{children}</pre>,
   a: ({ children, ...props }) => <a
     className="text-blue-700 dark:text-yellow-200 ease-in-out duration-200"

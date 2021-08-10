@@ -3,11 +3,8 @@
 
 var Head = {};
 
-var Link = {};
-
 export {
   Head ,
-  Link ,
   
 }
 /* No side effect */
