@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+
+body {
+  @apply font-sans bg-white w-full h-full;
+}
+
+pre, code, kbd, samp {
+  @apply font-mono;
+}
+
+@tailwind utilities;
