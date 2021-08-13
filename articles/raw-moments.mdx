@@ -1,0 +1,107 @@
+---
+title: Raw Moment Derivatives
+description: Generalizing to ETH^n-PERP
+date: 2021 August 13
+twitter: https://twitter.com/llllvvuu/status/1426227693876514819
+---
+
+In my last post, I described [ETH^2-PERP](/blog/unbundling-gamma) as a convexity product extending Dave White, SBF, et al's [everlasting options](https://www.paradigm.xyz/2021/05/everlasting-options/) framework. At that time, I didn't take the time to cover the general binomial expansion. I will do that here.
+
+There's a limit to what's a good idea in terms of stability (think about what happens if underlying doubles). However, as I alluded to, ETH^4 could be an interesting stop after ETH^2. ETH^3 and ETH^4 derive skewness and kurtosis, respectively. The former captures risk asymmetry, and the latter is for YOLOs. It's no coincidence that these are the ones that have names (although apparently, [sometimes fifth moments matter](https://medium.com/galois-capital/algorithmic-trading-in-crypto-430431da1e0a)).
+
+## Central Moments
+<p>
+The aforementioned distribution measures of interest come from <a href="https://en.wikipedia.org/wiki/Central_moment">central moments</a>, which are simply 
+<sp/><IM>{`
+\\mu_n = E[(X - E[X])^n]
+`}</IM>. Variance is the second central moment 
+<sp/><IM>{`
+\\mu_2
+`}</IM>,
+while skewness and kurtosis are the third and fourth <a href="https://en.wikipedia.org/wiki/Standardized_moment">standardized moments</a>
+<sp/><IM>{`
+\\frac{\\mu_3}{\\sigma^3}
+`}</IM><sp/>
+and
+<sp/><IM>{`
+\\frac{\\mu_4}{\\sigma^4} 
+`}</IM>,
+respectively. However, central moments are a moving target, which is why I've proposed ETH^n-PERP to capture the <a href="https://en.wikipedia.org/wiki/Raw_moment">raw moments</a>
+<sp/><IM>{`
+E[X^n]
+`}</IM>.
+We can construct the central moments from the raw moments
+<sp/><IM>{`
+\\mu_n'
+`}</IM><sp/>
+by binomial expanding (Wikipedia shows this as well):
+</p>
+<BM>{`
+\\begin{align*}
+\\mu_2 &= \\mu'_2 - \\mu^2 \\\\
+\\mu_3 &= \\mu'_3 - 3 \\mu \\mu'_2 + 2 \\mu^3 \\\\
+\\mu_4 &= \\mu'_4 - 4 \\mu \\mu'_3 + 6 \\mu^2 \\mu'_2 - 3 \\mu^4
+\\end{align*}
+`}</BM>
+where
+<sp/><IM>{`
+\\mu = E[X]
+`}</IM>.
+Similarly, we can price the raw moments from the central moments:
+<BM>{`
+\\begin{align*}
+\\mu_2' &= \\mu_2 + \\mu^2 \\\\
+\\mu_3' &= \\mu_3 + 3 \\mu \\mu_2 + \\mu^3 \\\\
+\\mu_4' &= \\mu_4 + 4 \\mu \\mu_3 + 6 \\mu^2 \\mu_2 + \\mu^4
+\\end{align*}
+`}</BM>
+
+n-th moment pricing works for any data-generating process (including vol-of-vol and discontinuities) with finite moments. For example, if we were to simply assume [geometric Brownian motion](https://en.wikipedia.org/wiki/Geometric_Brownian_motion#Use_in_finance), as in the Black-Scholes model, then we just use the [moments of the log-normal](https://en.wikipedia.org/wiki/Log-normal_distribution#Arithmetic_moments).
+
+## Premium
+<p>
+I previously analyzed the "premium" of ETH^2-PERP over spot. This is no longer a necessary mental construct if we think in terms of moments, but we could show it anyway with another binomial expansion
+<sp/><IM>{`
+E[P_t] = P + D_t
+`}</IM><sp/>
+where
+<sp/><IM>{`
+D_t = E[P_t] - P
+`}</IM><sp/>
+is the expected deviation of the price at time t from current spot:
+</p>
+<BM>{`
+\\begin{align*}
+E[P_t^n] &= \\sum_{k=0}^n \\binom{n}{k} E[(P_t - E[P_t])^k] E[P_t]^{n-k} \\\\
+&= P^n + \\sum_{k=0}^{n-1} \\binom{n}{k} P^k D_t^{n-k} + \\sum_{k=1}^n \\binom{n}{k} E[(P_t - E[P_t])^k] E[P_t]^{n-k}
+\\end{align*}
+`}</BM>
+
+Note that this is a bit less human readable, so I expect that traders wouldn't trade the premium directly, but rather trade in terms of central moments.
+
+## Greeks, again
+Notice that I've shifted the framing here from talking about Greeks (differential calculus) to moments (probability theory) as I consider it even more relevant/fundamental to modelling. Greeks only exist within the context of a pricing model - however, under simplistic pricing models (i.e. moments scale the natural way w.r.t. the underlying), exposure to only the n-th derivative is the same as buying the n-th central moment (exercise: use Taylor's theorem). Note: this actually means that my [earlier heuristic](/blog/unbundling-gamma) of "hedge $X of ETH^2-PERP with $2X short ETH spot" is only approximately true - can you see what the hedge technically should be?
+
+## Leverage
+A rather interesting sidenote is that ETH^n provides approximately n-times leverage. This means that long directional bets may never need "rolling". If you solve the ODE, you'll find that this property implies an ETH^n token.
+
+## Practical Considerations
+### BigNumber
+I previously suggested that ETH^2 could be settled in ETH to make things less overwhelming on the front end. Unfortunately, this idea doesn't generalize well. We also don't necessarily want to implement ticks (the tick size would be a moving target). Given that we want to avoid floating-point arithmetic, we may just have to bite the bullet here and use BigNumbers and scientific notation displays (I'll discuss some other trading interface ideas later). If we just go up to ETH^4 this isn't the worst.
+
+### Perp Convergence
+In general, the implied decay in the funding rate of ETH^n needs to be at least n times as fast as the growth of the underlying. If the distribution has exponentially-bounded tails, then all moments are finite, so the aforementioned condition is sufficient.
+
+## Position Builder Interface
+Something I used to mildly want is an interface where one can specify a posterior pdf and utility curve and get the best option play. That would have been kind of annoying to implement, iterating over a ton of contracts, dealing with execution costs, etc. With moments, interface construction becomes a bit easier. Here are some ideas:
+
+### Human Readable Market Outlook
+A trading interface could include charts for mean, variance, skewness, and kurtosis, as well as a picture of a distribution matching said measures (e.g. using [momentify](https://www.r-bloggers.com/2014/09/momentify-r-package/)).
+
+### Position Entry
+You could choose which central moments to long or short and the algo would construct that position from raw moments.
+
+As a helper, you could enter your posterior pdf into a moment calculator, graphically or through CIs/percentiles.
+
+## Disclaimer
+This is unaudited moon math, and not peer-reviewed. Shoot me a DM on Twitter if I missed anything!

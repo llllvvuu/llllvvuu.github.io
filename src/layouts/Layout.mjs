@@ -7,26 +7,24 @@ import Twitter from "@material-ui/icons/Twitter";
 function Layout(Props) {
   var children = Props.children;
   return React.createElement("div", {
-              className: "min-h-screen overflow-auto bg-white text-black\n    dark:bg-black dark:text-white ease-in-out duration-200"
-            }, React.createElement("div", {
-                  className: "max-w-screen-md mx-auto p-4"
-                }, React.createElement("h1", {
-                      className: "text-center text-4xl font-serif"
-                    }, React.createElement("a", {
-                          href: "/"
-                        }, "llllvvuu")), React.createElement("div", {
-                      className: "text-center mb-6"
-                    }, React.createElement("a", {
-                          href: "https://github.com/llllvvuu",
-                          target: "_blank"
-                        }, React.createElement(GitHub, {
-                              className: "m-1"
-                            })), React.createElement("a", {
-                          href: "https://twitter.com/llllvvuu",
-                          target: "_blank"
-                        }, React.createElement(Twitter, {
-                              className: "m-1"
-                            }))), children));
+              className: "max-w-screen-md mx-auto p-4"
+            }, React.createElement("h1", {
+                  className: "text-center"
+                }, React.createElement("a", {
+                      href: "/"
+                    }, "llllvvuu")), React.createElement("h6", {
+                  className: "text-center mb-6 black"
+                }, React.createElement("a", {
+                      href: "https://github.com/llllvvuu",
+                      target: "_blank"
+                    }, React.createElement(GitHub, {
+                          className: "m-1"
+                        })), React.createElement("a", {
+                      href: "https://twitter.com/llllvvuu",
+                      target: "_blank"
+                    }, React.createElement(Twitter, {
+                          className: "m-1"
+                        }))), children);
 }
 
 var make = Layout;

@@ -1,5 +1,6 @@
 import React from 'react';
 import 'styles/main.css'
+import 'styles/katex.min.css'
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {

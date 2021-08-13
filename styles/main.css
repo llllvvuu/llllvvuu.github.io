@@ -2,11 +2,33 @@
 @tailwind components;
 
 body {
-  @apply font-sans bg-white w-full h-full;
+  @apply w-full h-full font-sans bg-white text-black
+    dark:bg-black dark:text-white ease-in-out duration-200;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif;
+}
+
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-2xl;
 }
 
 pre, code, kbd, samp {
-  @apply font-mono;
+  @apply font-mono text-xs bg-yellow-100 text-yellow-900
+    dark:bg-blue-900 dark:text-blue-100
+}
+
+a {
+  @apply text-blue-800 dark:text-yellow-200 ease-in-out duration-200;
+}
+
+h1 a, h6 a {
+  @apply text-black dark:text-white;
 }
 
 @tailwind utilities;

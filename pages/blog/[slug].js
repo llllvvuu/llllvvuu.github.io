@@ -7,6 +7,8 @@ import { make as Meta } from 'src/components/Meta.mjs'
 import { make as Layout } from 'src/layouts/Layout.mjs'
 import Twitter from '@material-ui/icons/Twitter';
 
+import BlogRes from 'src/pages/BlogPage.mjs';
+
 export const config = { unstable_runtimeJS: false };
 
 // Custom components/renderers to pass to MDX.
@@ -14,8 +16,7 @@ export const config = { unstable_runtimeJS: false };
 // to handle import statements. Instead, you must include components in scope
 // here.
 const components = {
-  h2: ({ children }) => <h2 className="text-xl font-serif mt-2">{children}</h2>,
-  ul: ({ children }) => <ul className="list-disc list-inside my-1">{children}</ul>,
+  h2: ({ children }) => <h2 className="text-xl font-serif mt-2">{children}</h2>, ul: ({ children }) => <ul className="list-disc list-inside my-1">{children}</ul>,
   'p.inlineCode': ({ children }) => <code
     className="bg-yellow-100 text-yellow-900 text-xs p-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-100"
     >{children}</code>,
@@ -30,28 +31,7 @@ const components = {
     >{children}</div>
 }
 
-export default function PostPage({ source, frontMatter }) {
-  return (
-    <>
-      <Meta title={frontMatter.title} description={frontMatter.description} />
-      <Layout>
-        <h2 className="text-2xl font-serif">
-          {frontMatter.title}
-        </h2>
-        <h3 className="font-serif">
-          {frontMatter.description}
-        </h3>
-        <h4 className="font-serif italic mb-2">
-          {frontMatter.date}
-          {frontMatter.twitter && <a href={frontMatter.twitter} className="mx-1 text-blue-500" target="_blank"><Twitter fontSize="small" /></a>}
-        </h4>
-        <main>
-          <MDXRemote {...source} components={components} />
-        </main>
-      </Layout>
-    </>
-  )
-}
+const Blog = props => <BlogRes {...props} />
 
 export const getStaticProps = async ({ params }) => {
   const POSTS_PATH = path.join(process.cwd(), 'articles')
@@ -96,3 +76,5 @@ export const getStaticPaths = async () => {
     fallback: false,
   }
 }
+
+export default Blog;

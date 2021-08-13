@@ -1,15 +1,17 @@
-let default = () =>
+type props = {
+  "filenames": array<string>,
+  "frontMatters": array<PostInfo.frontMatter>,
+}
+
+let default = (props: props) => {
   <>
     <Meta title="llllvvuu" description="" />
     <Layout>
-      <h2 className="text-xl font-serif">
-        {`Unbundling Gamma: Proposal for ETH^2-PERP`->React.string}
-      </h2>
-      <h3 className="font-serif italic mb-2">
-        {`2021-08-10`->React.string}
-      </h3>
-      <p>
-        {`I assume that gamma is what many traders fundamentally want. The mathematically intuitive way to expose gamma is through the square of the underlying price.`->React.string}
-      </p>
+      {Belt.Array.zip(props["filenames"], props["frontMatters"])
+        ->Js.Array2.map(
+         ((filename, frontMatter)) =>
+           <PostInfo filename frontMatter key={filename} />
+        )->React.array}
     </Layout>
   </>
+}
