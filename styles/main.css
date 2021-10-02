@@ -31,4 +31,9 @@ h1 a, h6 a {
   @apply text-black dark:text-white;
 }
 
+p {
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
 @tailwind utilities;
