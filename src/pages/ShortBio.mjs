@@ -25,7 +25,19 @@ function $$default(param) {
                         }, "coordination problems"), " as a bottleneck to realizing humanity's global optimum. Along these lines, ", React.createElement("a", {
                           href: "https://atoms.org",
                           target: "_blank"
-                        }, "Atoms"), " is a recent initiative focused on coordinating and resourcing research\n        using Web3 and cryptoeconomics.")));
+                        }, "Atoms"), " is a recent initiative focused on coordinating and resourcing research\n        using Web3 and cryptoeconomics."), React.createElement("hr", undefined), React.createElement("p", undefined, React.createElement("a", {
+                          href: "https://prize.atoms.org",
+                          target: "_blank"
+                        }, "Atoms Prize"), React.createElement("br", undefined), React.createElement("a", {
+                          href: "https://www.youtube.com/watch?v=XXE_L4RCBio",
+                          target: "_blank"
+                        }, "Funding the Commons | Beyond Philanthropy"), React.createElement("br", undefined), React.createElement("a", {
+                          href: "https://showcase.ethglobal.com/ethonline2021/paperfax",
+                          target: "_blank"
+                        }, "ETHOnline | Paperfax"), React.createElement("br", undefined), React.createElement("a", {
+                          href: "https://showcase.ethglobal.com/ethonline2021/future-prizes",
+                          target: "_blank"
+                        }, "ETHOnline | Future Prizes"))));
 }
 
 export {

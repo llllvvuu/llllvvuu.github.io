@@ -33,6 +33,24 @@ let default = () => {
         {" is a recent initiative focused on coordinating and resourcing research
         using Web3 and cryptoeconomics."->React.string}
       </p>
+      <hr />
+      <p>
+        <a href="https://prize.atoms.org" target="_blank">
+          {"Atoms Prize"->React.string}
+        </a>
+        <br />
+        <a href="https://www.youtube.com/watch?v=XXE_L4RCBio" target="_blank">
+          {"Funding the Commons | Beyond Philanthropy"->React.string}
+        </a>
+        <br />
+        <a href="https://showcase.ethglobal.com/ethonline2021/paperfax" target="_blank">
+          {"ETHOnline | Paperfax"->React.string}
+        </a>
+        <br />
+        <a href="https://showcase.ethglobal.com/ethonline2021/future-prizes" target="_blank">
+          {"ETHOnline | Future Prizes"->React.string}
+        </a>
+      </p>
     </Layout>
   </>
 }
