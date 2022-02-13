@@ -80,7 +80,7 @@ E[P_t^n] &= \\sum_{k=0}^n \\binom{n}{k} E[(P_t - E[P_t])^k] E[P_t]^{n-k} \\\\
 Note that this is a bit less human readable, so I expect that traders wouldn't trade the premium directly, but rather trade in terms of central moments.
 
 ## Greeks, again
-Notice that I've shifted the framing here from talking about Greeks (differential calculus) to moments (probability theory) as I consider it even more relevant/fundamental to modelling. Greeks only exist within the context of a pricing model - however, under simplistic pricing models (i.e. moments scale the natural way w.r.t. the underlying), exposure to only the n-th derivative is the same as buying the n-th central moment (exercise: use Taylor's theorem). Note: this actually means that my [earlier heuristic](/blog/unbundling-gamma) of "hedge $X of ETH^2-PERP with $2X short ETH spot" is only approximately true - can you see what the hedge technically should be?
+Notice that I've shifted the framing here from talking about Greeks (differential calculus) to moments (probability theory) as I consider it even more relevant/fundamental to modelling. Greeks only exist within the context of a pricing model - however, under simplistic pricing models (i.e. moments scale the natural way w.r.t. the underlying), exposure to only the n-th derivative is the same as buying the n-th central moment (exercise: use Taylor's theorem).
 
 ## Leverage
 A rather interesting sidenote is that ETH^n provides approximately n-times leverage. This means that long directional bets may never need "rolling". If you solve the ODE, you'll find that this property implies an ETH^n token.
